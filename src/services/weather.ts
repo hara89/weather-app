@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const api = createApi({
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://api.weatherapi.com/v1' }),
+  baseQuery: fetchBaseQuery({ baseUrl: 'https://api.weatherapi.com/v1' }),
   endpoints: (builder) => ({
     getWeatherHistory: builder.query({
       query: ({ searchQuery, start, end }: { searchQuery: string; start: string; end: string }) =>
