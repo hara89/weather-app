@@ -1,61 +1,32 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
+import { useState } from 'react'
+import Header from '../components/Header'
+import Tab from '../components/Tab'
+import TabContent from '../components/TabContent'
 
-import Counter from '../features/counter/Counter'
-import styles from '../styles/Home.module.css'
+const tabs = ['New York', 'London', 'Berlin', 'Paris', 'Tokyo']
 
 const IndexPage: NextPage = () => {
+  const [activeTab, setActiveTab] = useState('New York')
+
   return (
-    <div className={styles.container}>
+    <div className="min-h-screen bg-gradient-to-r from-gray-900 to-gray-800">
       <Head>
-        <title>Redux Toolkit</title>
+        <title>Weather app</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <header className={styles.header}>
-        <img src="/logo.svg" className={styles.logo} alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className={styles.link}
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className={styles.link}
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className={styles.link}
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className={styles.link}
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
+      <div className="container mx-auto">
+        <Header />
+        <ul className="flex flex-wrap border-b border-gray-200 dark:border-gray-700">
+          {tabs.map((tab) => (
+            <Tab key={tab} tab={tab} isActive={tab === activeTab} onClick={setActiveTab}>
+              {tab}
+            </Tab>
+          ))}
+        </ul>
+        <TabContent activeTab={activeTab} />
+      </div>
     </div>
   )
 }

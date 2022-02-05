@@ -1,24 +1,13 @@
-import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit'
+import { configureStore } from '@reduxjs/toolkit'
+import { setupListeners } from '@reduxjs/toolkit/query'
+import { api } from '../services/weather'
 
-import counterReducer from '../features/counter/counterSlice'
+export const store = configureStore({
+  reducer: {
+    [api.reducerPath]: api.reducer,
+  },
 
-export function makeStore() {
-  return configureStore({
-    reducer: { counter: counterReducer },
-  })
-}
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(api.middleware),
+})
 
-const store = makeStore()
-
-export type AppState = ReturnType<typeof store.getState>
-
-export type AppDispatch = typeof store.dispatch
-
-export type AppThunk<ReturnType = void> = ThunkAction<
-  ReturnType,
-  AppState,
-  unknown,
-  Action<string>
->
-
-export default store
+setupListeners(store.dispatch)
