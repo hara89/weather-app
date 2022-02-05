@@ -12,11 +12,15 @@ type Props = {
 const TabContent = ({ activeTab }: Props) => {
   const [activeDate, setActiveDate] = useState<Date>(new Date())
 
-  const { data, isLoading, error } = useGetWeatherHistoryQuery({
+  const { data, isLoading, error, isError } = useGetWeatherHistoryQuery({
     searchQuery: activeTab,
     start: formatDate(addDays(activeDate, -6)),
     end: formatDate(activeDate),
   })
+
+  if (isError) {
+    console.error(error)
+  }
 
   if (isLoading) return <div className="py-4 text-white">Loading...</div>
 
@@ -26,7 +30,7 @@ const TabContent = ({ activeTab }: Props) => {
         {!error ? (
           <WeatherHistory weatherData={data} key={`${activeTab} ${activeDate}`} />
         ) : (
-          <div className="text-rose-900	">Error: {error.data.error.message}</div>
+          <div className="text-rose-900	">Error Occured! Try select another date</div>
         )}
       </div>
       <div className="relative order-first flex basis-1/2 flex-col px-6 py-6 md:p-10 lg:basis-1/4 lg:py-10 lg:pr-10 xl:order-last xl:pl-0">
